@@ -1,0 +1,32 @@
+package jibe
+
+import (
+	"bytes"
+	"context"
+	"log/slog"
+	"strings"
+	"testing"
+)
+
+func TestSlog(t *testing.T) {
+	buf := &bytes.Buffer{}
+	var handler slog.Handler
+	handler = slog.NewJSONHandler(buf, &slog.HandlerOptions{
+		AddSource: true,
+		Level:     slog.LevelDebug,
+	})
+	handler = SlogHandler(handler, "traceId")
+	slog.SetDefault(slog.New(handler))
+
+	ctx1 := context.Background()
+	ctx1 = SetID(ctx1, "1234")
+
+	slog.InfoContext(ctx1, "test")
+	if buf.String() == "" {
+		t.Error("buf.String() == ")
+	}
+	if !strings.Contains(buf.String(), `"traceId":"1234"`) {
+		t.Logf("buf.String() == %s", buf.String())
+		t.Error(`!strings.Contains(buf.String(), "traceId":"1234")`)
+	}
+}

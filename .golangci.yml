@@ -1,0 +1,36 @@
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - dogsled
+    - durationcheck
+    - errcheck
+    - errchkjson
+    - errorlint
+    - errname
+    - exhaustive
+    - exportloopref
+    - gci
+    - gochecknoglobals
+    - gochecknoinits
+    - gofumpt
+    - gosec
+    - gosimple
+    - govet
+    - importas
+    - ineffassign
+    - makezero
+    - misspell
+    - nilerr
+    - noctx
+    - revive
+    - staticcheck
+    - typecheck
+    - unconvert
+    - unused
+linters-settings:
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/kwo/jibe)
