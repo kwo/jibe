@@ -8,14 +8,13 @@ import (
 	"testing"
 )
 
-func TestSlog(t *testing.T) {
+func TestSlogJson(t *testing.T) {
 	buf := &bytes.Buffer{}
 	var handler slog.Handler
 	handler = slog.NewJSONHandler(buf, &slog.HandlerOptions{
-		AddSource: true,
-		Level:     slog.LevelDebug,
+		Level: slog.LevelDebug,
 	})
-	handler = SlogHandler(handler, "traceId")
+	handler = SlogHandler("traceId", handler)
 	slog.SetDefault(slog.New(handler))
 
 	ctx1 := context.Background()
@@ -28,5 +27,27 @@ func TestSlog(t *testing.T) {
 	if !strings.Contains(buf.String(), `"traceId":"1234"`) {
 		t.Logf("buf.String() == %s", buf.String())
 		t.Error(`!strings.Contains(buf.String(), "traceId":"1234")`)
+	}
+}
+
+func TestSlogText(t *testing.T) {
+	buf := &bytes.Buffer{}
+	var handler slog.Handler
+	handler = slog.NewTextHandler(buf, &slog.HandlerOptions{
+		Level: slog.LevelDebug,
+	})
+	handler = SlogHandler("traceId", handler)
+	slog.SetDefault(slog.New(handler))
+
+	ctx1 := context.Background()
+	ctx1 = SetID(ctx1, "1234")
+
+	slog.InfoContext(ctx1, "test")
+	if buf.String() == "" {
+		t.Error("buf.String() == ")
+	}
+	if !strings.Contains(buf.String(), `traceId=1234`) {
+		t.Logf("buf.String() == %s", buf.String())
+		t.Error(`!strings.Contains(buf.String(), "traceId=1234")`)
 	}
 }

@@ -14,14 +14,13 @@ func TestHttp(t *testing.T) {
 		}
 	})
 
-	handler := Middleware(NewID)(handler1)
+	handler := HTTPHandler(NewID)(handler1)
 	httpd := httptest.NewServer(handler)
 
 	req, err := http.NewRequestWithContext(context.Background(), "GET", httpd.URL, nil)
 	if err != nil {
 		t.Error(err)
 	}
-	req.Header.Set("X-Request-ID", "test")
 	rsp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		t.Error(err)

@@ -7,7 +7,7 @@ import (
 
 // SlogHandler returns a slog.Handler that extracts the ID from the context
 // and adds it to the record.
-func SlogHandler(h slog.Handler, idName string) slog.Handler {
+func SlogHandler(idName string, h slog.Handler) slog.Handler {
 	return idHandler{Handler: h, idName: idName}
 }
 
