@@ -4,12 +4,12 @@ import (
 	"context"
 )
 
-type contextKey int
+type contextKey string
 
 type IDProducer func() string
 
 const (
-	idContextKey contextKey = 1
+	idContextKey contextKey = "github.com/kwo/jibe/id"
 )
 
 func GetID(ctx context.Context) string {
