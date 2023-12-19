@@ -14,7 +14,7 @@ func TestHttp(t *testing.T) {
 		}
 	})
 
-	handler := HTTPHandler(NewID)(handler1)
+	handler := HTTPHandler(NewID, handler1)
 	httpd := httptest.NewServer(handler)
 
 	req, err := http.NewRequestWithContext(context.Background(), "GET", httpd.URL, nil)
