@@ -14,7 +14,7 @@ func TestHttp(t *testing.T) {
 		}
 	})
 
-	handler := HTTPHandler(NewID, handler1)
+	handler := WithRequestID(newID, handler1)
 	httpd := httptest.NewServer(handler)
 
 	req, err := http.NewRequestWithContext(context.Background(), "GET", httpd.URL, nil)
@@ -29,4 +29,8 @@ func TestHttp(t *testing.T) {
 	if rsp.StatusCode != http.StatusOK {
 		t.Errorf("rsp.StatusCode != http.StatusOK; rsp.StatusCode == %d", rsp.StatusCode)
 	}
+}
+
+func newID() string {
+	return "1234"
 }
