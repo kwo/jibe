@@ -31,7 +31,7 @@ func (r *responseWrapper) WriteHeader(statusCode int) {
 func WithLogging(level slog.Level, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
-		rd := &responseData{}
+		rd := &responseData{status: http.StatusOK, size: 0}
 		lw := &responseWrapper{ResponseWriter: w, responseData: rd}
 		next.ServeHTTP(lw, r)
 		duration := time.Since(start)
