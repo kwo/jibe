@@ -6,12 +6,11 @@ import (
 
 type contextKey string
 
-type IDProducer func() string
-
 const (
 	idContextKey contextKey = "github.com/kwo/jibe/id"
 )
 
+// GetID returns the ID from the context.
 func GetID(ctx context.Context) string {
 	if ctx == nil {
 		return ""
@@ -22,6 +21,7 @@ func GetID(ctx context.Context) string {
 	return ""
 }
 
+// SetID adds the ID to the context.
 func SetID(ctx context.Context, id string) context.Context {
 	return context.WithValue(ctx, idContextKey, id)
 }

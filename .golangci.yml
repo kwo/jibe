@@ -1,3 +1,4 @@
+# see https://golangci-lint.run/usage/linters/
 linters:
   disable-all: true
   enable:
@@ -20,11 +21,14 @@ linters:
     - importas
     - ineffassign
     - makezero
+    - maintidx
     - misspell
     - nilerr
     - noctx
+    - nolintlint
     - revive
     - staticcheck
+    - stylecheck
     - typecheck
     - unconvert
     - unused
@@ -34,3 +38,9 @@ linters-settings:
       - standard
       - default
       - prefix(github.com/kwo/jibe)
+  maintidx:
+    # Show functions with maintainability index lower than N.
+    # A high index indicates better maintainability (it's kind of the opposite of complexity).
+    # Default: 20
+    under: 30
+
