@@ -14,7 +14,7 @@ func TestSlogJson(t *testing.T) {
 	handler = slog.NewJSONHandler(buf, &slog.HandlerOptions{
 		Level: slog.LevelDebug,
 	})
-	handler = WithRecordID("traceId", handler)
+	handler = WithSlogHandler("traceId", handler)
 	slog.SetDefault(slog.New(handler))
 
 	ctx1 := context.Background()
@@ -36,7 +36,7 @@ func TestSlogText(t *testing.T) {
 	handler = slog.NewTextHandler(buf, &slog.HandlerOptions{
 		Level: slog.LevelDebug,
 	})
-	handler = WithRecordID("traceId", handler)
+	handler = WithSlogHandler("traceId", handler)
 	slog.SetDefault(slog.New(handler))
 
 	ctx1 := context.Background()

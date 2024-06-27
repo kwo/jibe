@@ -36,10 +36,6 @@ func WithLogging(level slog.Level, next http.Handler) http.Handler {
 		lw := &responseWrapper{ResponseWriter: w, responseData: rd}
 		next.ServeHTTP(lw, r)
 		duration := time.Since(start)
-		args := []any{"duration", duration, "method", r.Method, "size", rd.size, "status", rd.status, "uri", r.RequestURI}
-		if id := GetID(r.Context()); id != "" {
-			args = append(args, "id", id)
-		}
-		slog.Log(r.Context(), level, "http request", args...)
+		slog.Log(r.Context(), level, "http request", "duration", duration, "method", r.Method, "size", rd.size, "status", rd.status, "uri", r.RequestURI)
 	})
 }

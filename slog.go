@@ -5,9 +5,9 @@ import (
 	"log/slog"
 )
 
-// WithRecordID returns a slog.Handler that extracts the ID from the context
+// WithSlogHandler returns a slog.Handler that extracts the ID from the context
 // and adds it to the record.
-func WithRecordID(idName string, h slog.Handler) slog.Handler {
+func WithSlogHandler(idName string, h slog.Handler) slog.Handler {
 	return idHandler{Handler: h, idName: idName}
 }
 
