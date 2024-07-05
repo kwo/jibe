@@ -1,6 +1,7 @@
 package jibe
 
 import (
+	"fmt"
 	"log/slog"
 	"net/http"
 	"time"
@@ -36,6 +37,7 @@ func WithLogging(level slog.Level, next http.Handler) http.Handler {
 		lw := &responseWrapper{ResponseWriter: w, responseData: rd}
 		next.ServeHTTP(lw, r)
 		duration := time.Since(start)
-		slog.Log(r.Context(), level, "http request", "duration", duration, "method", r.Method, "size", rd.size, "status", rd.status, "uri", r.RequestURI)
+		msg := fmt.Sprintf("%s %-22s", r.Method, r.RequestURI)
+		slog.Log(r.Context(), level, msg, "status", rd.status, "size", rd.size, "duration", duration)
 	})
 }
